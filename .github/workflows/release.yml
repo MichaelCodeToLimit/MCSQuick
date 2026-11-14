@@ -1,0 +1,27 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build archives
+        run: |
+          mkdir -p out w m l/mc-setup-linux
+          cp mc-setup.bat mc-setup.ps1 mc-customize.bat mc-customize.ps1 README.md w/
+          cp mc-setup.command mc-setup.sh mc-customize.command mc-customize.sh README.md m/
+          cp mc-setup.sh mc-customize.sh README.md l/mc-setup-linux/
+          chmod +x m/*.command m/*.sh l/mc-setup-linux/*.sh
+          (cd w && zip -q ../out/mc-setup-windows.zip *)
+          (cd m && zip -q ../out/mc-setup-mac.zip *)
+          (cd l && tar czf ../out/mc-setup-linux.tar.gz mc-setup-linux && zip -qr ../out/mc-setup-linux.zip mc-setup-linux)
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" out/* --title "$GITHUB_REF_NAME" \
+            --notes "New tool, not tested on every system. Mac, Linux and some translations were only checked in simulation. Please report problems as issues."

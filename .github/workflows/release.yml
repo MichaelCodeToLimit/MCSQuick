@@ -2,6 +2,11 @@ name: Release
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to create
+        default: v0.1.0
 permissions:
   contents: write
 jobs:
@@ -23,5 +28,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" out/* --title "$GITHUB_REF_NAME" \
+          T="${{ github.event.inputs.tag || github.ref_name }}"
+          gh release create "$T" --target main out/* --title "$T" \
             --notes "New tool, not tested on every system. Mac, Linux and some translations were only checked in simulation. Please report problems as issues."

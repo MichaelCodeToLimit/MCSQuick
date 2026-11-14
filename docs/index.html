@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minecraft Server Setup</title>
+<meta name="description" content="Set up your own Minecraft Java server in minutes by answering a few questions. Windows, Mac and Linux. Free and open source.">
+<style>
+:root{--bg:#f5f1e8;--fg:#1f2a1c;--mut:#55604f;--card:#fffdf6;--line:#cfc6ae;--acc:#3f8f2f;--acc2:#2b6a20;--onacc:#fff;--code:#ece6d3;--hl:#fff3c4}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#161a14;--fg:#e8eadf;--mut:#a3ad9a;--card:#1f241c;--line:#39422f;--acc:#5fb84a;--acc2:#7ad163;--onacc:#10200b;--code:#12160f;--hl:#3a3516}}
+:root[data-theme=dark]{--bg:#161a14;--fg:#e8eadf;--mut:#a3ad9a;--card:#1f241c;--line:#39422f;--acc:#5fb84a;--acc2:#7ad163;--onacc:#10200b;--code:#12160f;--hl:#3a3516}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.w{max-width:960px;margin:0 auto;padding:0 16px}
+header.top{border-bottom:3px solid var(--line)}
+nav{display:flex;justify-content:space-between;align-items:center;padding:12px 0;gap:12px;flex-wrap:wrap}
+nav b{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.5px}
+nav a{color:var(--fg);margin-left:16px}
+button.t{background:var(--card);color:var(--fg);border:2px solid var(--line);padding:6px 10px;cursor:pointer;font:inherit}
+.hero{padding:48px 0 32px}
+h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.1;margin:0 0 12px;font-family:ui-monospace,Menlo,Consolas,monospace}
+h2{font-family:ui-monospace,Menlo,Consolas,monospace;margin:40px 0 12px}
+.lead{font-size:1.2rem;color:var(--mut);max-width:40em}
+.btn{display:inline-block;background:var(--acc);color:var(--onacc);padding:12px 18px;text-decoration:none;font-weight:700;border:2px solid var(--acc2);border-bottom-width:5px;margin:4px 6px 4px 0}
+.btn:hover,.btn:focus-visible{background:var(--acc2)}
+.btn.alt{background:var(--card);color:var(--fg);border-color:var(--line)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.card{background:var(--card);border:2px solid var(--line);padding:14px 16px}
+.card.me{background:var(--hl);border-color:var(--acc)}
+.card h3{margin:0 0 6px;font-size:1.05rem}
+.card p{margin:4px 0;color:var(--mut)}
+pre{background:var(--code);padding:12px;overflow:auto;border:2px solid var(--line);position:relative}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem}
+.cp{margin-top:6px}
+.note{border-left:6px solid #d9a21b;background:var(--card);padding:10px 14px;margin:16px 0}
+details{background:var(--card);border:2px solid var(--line);padding:10px 14px;margin:8px 0}
+summary{cursor:pointer;font-weight:700}
+ol li{margin:6px 0}
+footer{border-top:3px solid var(--line);margin-top:48px;padding:24px 0;color:var(--mut)}
+.badge{display:inline-block;font-size:.8rem;border:2px solid var(--acc);color:var(--acc2);padding:0 6px;margin-left:6px}
+</style>
+</head>
+<body>
+<header class="top"><div class="w"><nav>
+  <b>▦ MC SERVER SETUP</b>
+  <span><a href="#download">Download</a><a href="#how">How it works</a><a href="#faq">FAQ</a><a href="https://github.com/MichaelCodeToLimit/MCsQuick">GitHub</a>
+  <button class="t" id="theme" type="button" aria-label="Switch light or dark theme">Theme</button></span>
+</nav></div></header>
+
+<main class="w">
+<section class="hero">
+  <h1>Your own Minecraft server, in a few questions.</h1>
+  <p class="lead">A free, open-source setup tool for Minecraft Java servers. It asks simple questions, downloads Java and the server for you, and gives you start scripts and an address friends can join. Windows, Mac and Linux, in 14 languages.</p>
+  <p><a class="btn" id="mainbtn" href="#download">Download</a><a class="btn alt" href="https://github.com/MichaelCodeToLimit/MCsQuick">View on GitHub</a></p>
+  <div class="note"><b>Heads up:</b> this tool is new. It has not been tested on every system, and some parts (for example Geyser downloads, the Mac and Linux versions, and some translations) have only been checked in simulation. If something breaks, please open an issue on GitHub.</div>
+</section>
+
+<section id="features">
+  <h2>What it does</h2>
+  <div class="grid">
+    <div class="card"><h3>Simple or Advanced</h3><p>Simple asks a handful of questions. Advanced lets you choose everything, including the server version.</p></div>
+    <div class="card"><h3>Vanilla or Paper</h3><p>Plain Minecraft, or Paper for plugins and better performance. Optional Velocity proxy.</p></div>
+    <div class="card"><h3>Java + Bedrock</h3><p>Optional Geyser and Floodgate so phone and console players can join too.</p></div>
+    <div class="card"><h3>Free tunnels</h3><p>A step-by-step guide for playit.gg (or ngrok), so friends can join without port forwarding. Port forwarding and UPnP are supported too.</p></div>
+    <div class="card"><h3>Plugins and mods</h3><p>Pick popular plugins and mods from a list, and change them later.</p></div>
+    <div class="card"><h3>Change it later</h3><p>A second script edits an existing server: settings, version, plugins. It makes a backup first.</p></div>
+    <div class="card"><h3>14 languages</h3><p>English, 中文, हिन्दी, العربية, עברית, Español, Français, Deutsch, Português, Русский, 日本語, 한국어, Türkçe, Italiano, with right-to-left support.</p></div>
+    <div class="card"><h3>Everything automatic</h3><p>Downloads Java, creates start and stop scripts, can start with your computer, and handles online or offline mode.</p></div>
+  </div>
+</section>
+
+<section id="download">
+  <h2>Download</h2>
+  <p>We highlighted the one for your system. Files come from the <a href="https://github.com/MichaelCodeToLimit/MCsQuick/releases/latest">latest release</a>.</p>
+  <div class="grid">
+    <div class="card" data-os="windows"><h3>Windows</h3><p>Unzip, then double-click <code>mc-setup.bat</code>.</p>
+      <a class="btn" href="https://github.com/MichaelCodeToLimit/MCsQuick/releases/latest/download/mc-setup-windows.zip">mc-setup-windows.zip</a></div>
+    <div class="card" data-os="mac"><h3>Mac</h3><p>Unzip, then double-click <code>mc-setup.command</code> (right-click, Open the first time).</p>
+      <a class="btn" href="https://github.com/MichaelCodeToLimit/MCsQuick/releases/latest/download/mc-setup-mac.zip">mc-setup-mac.zip</a></div>
+    <div class="card" data-os="linux"><h3>Linux</h3><p>Ubuntu/Debian, Fedora, Arch and others. Works over SSH.</p>
+      <a class="btn" href="https://github.com/MichaelCodeToLimit/MCsQuick/releases/latest/download/mc-setup-linux.tar.gz">mc-setup-linux.tar.gz</a>
+      <a class="btn alt" href="https://github.com/MichaelCodeToLimit/MCsQuick/releases/latest/download/mc-setup-linux.zip">.zip</a></div>
+  </div>
+  <h3>Linux, one line</h3>
+  <p>After downloading, run this in the same folder:</p>
+  <pre><code id="lin">tar xzf mc-setup-linux.tar.gz &amp;&amp; cd mc-setup-linux &amp;&amp; ./mc-setup.sh</code></pre>
+  <button class="t cp" type="button" data-copy="lin">Copy</button>
+</section>
+
+<section id="how">
+  <h2>How it works</h2>
+  <ol>
+    <li>Download and unpack the file for your system, then start it (see above).</li>
+    <li>Choose your language, then <b>Simple</b> or <b>Advanced</b>.</li>
+    <li>Name your server, pick the version, and say whether Bedrock players should be able to join.</li>
+    <li>Choose how friends connect: a playit.gg tunnel (easiest), or port forwarding.</li>
+    <li>Wait while it downloads Java and the server. Then use the start script it creates.</li>
+    <li>Later, run <code>mc-customize</code> to change settings, version or plugins.</li>
+  </ol>
+</section>
+
+<section id="faq">
+  <h2>FAQ</h2>
+  <details><summary>What is a playit.gg tunnel?</summary><p>A free service that gives your server a public address without touching your router. The tool walks you through creating the account and tunnel step by step. Bedrock players need a second (UDP) tunnel, and the guide covers that too.</p></details>
+  <details><summary>Do I need port forwarding?</summary><p>Not if you use a tunnel. Port forwarding opens port 25565 (and 19132 for Bedrock) on your router. The tool can try UPnP for you, but not every router allows it.</p></details>
+  <details><summary>Online mode or offline mode?</summary><p>Online mode checks that players own Minecraft and is safer. Offline mode lets anyone join with any name, which is risky on a public server. The tool defaults to online mode.</p></details>
+  <details><summary>Are Bedrock players supported?</summary><p>Yes, through Geyser and Floodgate on Paper. Bedrock names get a "." prefix by default, and Bedrock needs UDP port 19132.</p></details>
+  <details><summary>Is it safe? Does it phone home?</summary><p>No trackers. It downloads Java and server software from their official sources, and nothing else. The scripts are plain text, so you can read them before running.</p></details>
+  <details><summary>Windows or macOS says it can't open the file.</summary><p>That is the normal warning for unsigned downloads. On Mac, right-click then Open. On Windows, choose More info, then Run anyway.</p></details>
+</section>
+</main>
+
+<footer><div class="w">Open source under the MIT license. <a href="https://github.com/MichaelCodeToLimit/MCsQuick">Source and issues on GitHub</a>. Not affiliated with Mojang or Microsoft. Minecraft is a trademark of Mojang Studios.</div></footer>
+
+<script>
+(function(){
+  var ua=(navigator.userAgent||"")+" "+(navigator.platform||"");
+  var os=/Android|iPhone|iPad/i.test(ua)?"":/Win/i.test(ua)?"windows":/Mac/i.test(ua)?"mac":/Linux|X11|CrOS/i.test(ua)?"linux":"";
+  if(os){
+    var c=document.querySelector('[data-os="'+os+'"]');
+    if(c){c.classList.add("me");var h=c.querySelector("h3");h.insertAdjacentHTML("beforeend",'<span class="badge">your system</span>');
+      var b=document.getElementById("mainbtn");b.textContent="Download for "+h.firstChild.textContent;b.href=c.querySelector("a.btn").href;}
+  }
+  document.querySelectorAll("[data-copy]").forEach(function(b){b.addEventListener("click",function(){
+    var t=document.getElementById(b.dataset.copy).textContent;
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent="Copied"},function(){b.textContent="Select and copy"});
+  });});
+  var r=document.documentElement;
+  document.getElementById("theme").addEventListener("click",function(){
+    var dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+    r.dataset.theme=dark?"light":"dark";
+  });
+})();
+</script>
+</body>
+</html>

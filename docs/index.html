@@ -38,6 +38,7 @@ details{background:var(--card);border:2px solid var(--line);padding:10px 14px;ma
 summary{cursor:pointer;font-weight:700}
 ol li{margin:6px 0}
 footer{border-top:3px solid var(--line);margin-top:48px;padding:24px 0;color:var(--mut)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}[role=tab]{background:var(--card);color:var(--fg);border:2px solid var(--line);padding:6px 12px;cursor:pointer;font:inherit}[role=tab][aria-selected=true]{background:var(--acc);color:var(--onacc);border-color:var(--acc2)}
 .badge{display:inline-block;font-size:.8rem;border:2px solid var(--acc);color:var(--acc2);padding:0 6px;margin-left:6px}
 </style>
 </head>
@@ -72,20 +73,11 @@ footer{border-top:3px solid var(--line);margin-top:48px;padding:24px 0;color:var
 
 <section id="download">
   <h2>Download</h2>
-  <p>We highlighted the one for your system. Files come from the <a href="https://github.com/MichaelCodeToLimit/MCsQuick/releases/latest">latest release</a>.</p>
-  <div class="grid">
-    <div class="card" data-os="windows"><h3>Windows</h3><p>Unzip, then double-click <code>mc-setup.bat</code>.</p>
-      <a class="btn" href="https://github.com/MichaelCodeToLimit/MCsQuick/releases/latest/download/mc-setup-windows.zip">mc-setup-windows.zip</a></div>
-    <div class="card" data-os="mac"><h3>Mac</h3><p>Unzip, then double-click <code>mc-setup.command</code> (right-click, Open the first time).</p>
-      <a class="btn" href="https://github.com/MichaelCodeToLimit/MCsQuick/releases/latest/download/mc-setup-mac.zip">mc-setup-mac.zip</a></div>
-    <div class="card" data-os="linux"><h3>Linux</h3><p>Ubuntu/Debian, Fedora, Arch and others. Works over SSH.</p>
-      <a class="btn" href="https://github.com/MichaelCodeToLimit/MCsQuick/releases/latest/download/mc-setup-linux.tar.gz">mc-setup-linux.tar.gz</a>
-      <a class="btn alt" href="https://github.com/MichaelCodeToLimit/MCsQuick/releases/latest/download/mc-setup-linux.zip">.zip</a></div>
-  </div>
-  <h3>Linux, one line</h3>
-  <p>After downloading, run this in the same folder:</p>
-  <pre><code id="lin">tar xzf mc-setup-linux.tar.gz &amp;&amp; cd mc-setup-linux &amp;&amp; ./mc-setup.sh</code></pre>
-  <button class="t cp" type="button" data-copy="lin">Copy</button>
+  <p>Pick your system and install method. We highlighted the one for your system. Files come from the <a href="https://github.com/MichaelCodeToLimit/MCsQuick/releases/latest">latest release</a>.</p>
+  <div role="tablist" aria-label="System" id="oses"></div>
+  <div role="tablist" aria-label="Install method" id="meths"></div>
+  <div class="card" id="panel" role="tabpanel" aria-live="polite"></div>
+  <div class="note"><b>Untested packages:</b> the zips and tar.gz were tried in simulation only. The .deb, .rpm, AppImage, Flatpak, AUR, Homebrew and Nix packages are new and have <b>not</b> been tried on real systems yet. The AUR, Homebrew and Nix files are in the repo's <code>packaging</code> folder and are not published to those stores.</div>
 </section>
 
 <section id="how">
@@ -115,17 +107,43 @@ footer{border-top:3px solid var(--line);margin-top:48px;padding:24px 0;color:var
 
 <script>
 (function(){
+  var R="https://github.com/MichaelCodeToLimit/MCsQuick/releases/latest/download/";
+  var D={
+    windows:{label:"Windows",m:[{k:"zip",l:"Zip",f:"mc-setup-windows.zip",t:"Unzip it, then double-click <code>mc-setup.bat</code>. Keep <code>mc-setup.ps1</code> next to it. Windows may say it is unrecognised: choose More info, then Run anyway."}]},
+    mac:{label:"Mac",m:[
+      {k:"brew",l:"Homebrew",t:"Not published to a tap yet. Until then use the zip. (The formula is in the repo's <code>packaging/homebrew</code> folder.)"},
+      {k:"zip",l:"Zip",f:"mc-setup-mac.zip",t:"Unzip, then double-click <code>mc-setup.command</code>. First time: right-click, Open."}]},
+    linux:{label:"Linux",m:[
+      {k:"tar",l:".tar.gz",f:"mc-setup-linux.tar.gz",c:"tar xzf mc-setup-linux.tar.gz && cd mc-setup-linux && ./mc-setup.sh",t:"Works on any distro, also over SSH. A plain .tar and a .zip are on the release page too."},
+      {k:"deb",l:".deb (Debian, Ubuntu)",f:"mcsquick_0.2.0_all.deb",c:"sudo apt install ./mcsquick_0.2.0_all.deb && mcsquick",t:"Installs the <code>mcsquick</code> command. Run <code>mcsquick customize</code> to change a server later."},
+      {k:"rpm",l:".rpm (Fedora, openSUSE)",f:"mcsquick-0.2.0-1.noarch.rpm",c:"sudo dnf install ./mcsquick-0.2.0-1.noarch.rpm && mcsquick",t:"On openSUSE use <code>sudo zypper install ./mcsquick-0.2.0-1.noarch.rpm</code>."},
+      {k:"flatpak",l:"Flatpak",f:"MCsQuick.flatpak",c:"flatpak install --user MCsQuick.flatpak && flatpak run io.github.MichaelCodeToLimit.MCsQuick",t:"Run it from a terminal: the wizard is text based. The app can reach your home folder and the network. Not on Flathub."},
+      {k:"appimage",l:"AppImage",f:"MCsQuick-0.2.0-x86_64.AppImage",c:"chmod +x MCsQuick-0.2.0-x86_64.AppImage && ./MCsQuick-0.2.0-x86_64.AppImage",t:"Run it from a terminal. No install needed."},
+      {k:"aur",l:"Arch (AUR)",c:"git clone https://github.com/MichaelCodeToLimit/MCsQuick && cd MCsQuick/packaging/arch && makepkg -si",t:"Not on the AUR yet. This builds the package from the PKGBUILD in the repo."}]}
+  };
   var ua=(navigator.userAgent||"")+" "+(navigator.platform||"");
-  var os=/Android|iPhone|iPad/i.test(ua)?"":/Win/i.test(ua)?"windows":/Mac/i.test(ua)?"mac":/Linux|X11|CrOS/i.test(ua)?"linux":"";
-  if(os){
-    var c=document.querySelector('[data-os="'+os+'"]');
-    if(c){c.classList.add("me");var h=c.querySelector("h3");h.insertAdjacentHTML("beforeend",'<span class="badge">your system</span>');
-      var b=document.getElementById("mainbtn");b.textContent="Download for "+h.firstChild.textContent;b.href=c.querySelector("a.btn").href;}
+  var mine=/Android|iPhone|iPad/i.test(ua)?"":/Win/i.test(ua)?"windows":/Mac/i.test(ua)?"mac":/Linux|X11|CrOS/i.test(ua)?"linux":"";
+  var os=mine||"linux", mi=0;
+  var oses=document.getElementById("oses"),meths=document.getElementById("meths"),panel=document.getElementById("panel");
+  oses.className=meths.className="tabs";
+  function esc(t){return t}
+  function draw(){
+    oses.innerHTML="";meths.innerHTML="";
+    Object.keys(D).forEach(function(k){var b=document.createElement("button");b.type="button";b.setAttribute("role","tab");
+      b.setAttribute("aria-selected",k===os);b.textContent=D[k].label+(k===mine?" (your system)":"");
+      b.onclick=function(){os=k;mi=0;draw()};oses.appendChild(b)});
+    D[os].m.forEach(function(m,i){var b=document.createElement("button");b.type="button";b.setAttribute("role","tab");
+      b.setAttribute("aria-selected",i===mi);b.textContent=m.l;b.onclick=function(){mi=i;draw()};meths.appendChild(b)});
+    var m=D[os].m[mi],h="<h3>"+D[os].label+": "+m.l+"</h3><p>"+m.t+"</p>";
+    if(m.f)h+='<p><a class="btn" href="'+R+m.f+'">Download '+m.f+'</a></p>';
+    if(m.c)h+='<pre><code id="cmd"></code></pre><button class="t" type="button" id="cpy">Copy command</button>';
+    panel.innerHTML=h;
+    if(m.c){document.getElementById("cmd").textContent=m.c;
+      document.getElementById("cpy").onclick=function(){var b=this;(navigator.clipboard?navigator.clipboard.writeText(m.c):Promise.reject()).then(function(){b.textContent="Copied"},function(){b.textContent="Select and copy"})}}
   }
-  document.querySelectorAll("[data-copy]").forEach(function(b){b.addEventListener("click",function(){
-    var t=document.getElementById(b.dataset.copy).textContent;
-    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent="Copied"},function(){b.textContent="Select and copy"});
-  });});
+  draw();
+  var mb=document.getElementById("mainbtn");
+  if(mine){var f=D[mine].m.filter(function(x){return x.f})[0];mb.textContent="Download for "+D[mine].label;mb.href=R+f.f}
   var r=document.documentElement;
   document.getElementById("theme").addEventListener("click",function(){
     var dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;

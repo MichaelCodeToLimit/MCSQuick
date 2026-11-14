@@ -18,17 +18,23 @@ Downloads are on the **Releases** page: `mc-setup-windows.zip`, `mc-setup-mac.zi
 
 **Windows:** unzip, then double-click **`mc-setup.bat`** (keep `mc-setup.ps1` next to it).
 
-**Linux (Ubuntu/Debian, Fedora, Arch, openSUSE, Alpine):** download `mc-setup-linux.tar.gz` (or the `.zip`), then:
+**Linux:** pick one. All of these are new and the packages other than the tar.gz have **not** been tried on real systems yet. Files are on the Releases page.
 
-```
-tar xzf mc-setup-linux.tar.gz && cd mc-setup-linux && ./mc-setup.sh
-```
+| Format | Install |
+|---|---|
+| tar.gz (any distro, also .tar and .zip) | `tar xzf mc-setup-linux.tar.gz && cd mc-setup-linux && ./mc-setup.sh` |
+| .deb (Debian, Ubuntu) | `sudo apt install ./mcsquick_0.2.0_all.deb && mcsquick` |
+| .rpm (Fedora, openSUSE) | `sudo dnf install ./mcsquick-0.2.0-1.noarch.rpm && mcsquick` (openSUSE: `zypper install`) |
+| Flatpak | `flatpak install --user MCsQuick.flatpak && flatpak run io.github.MichaelCodeToLimit.MCsQuick` (run it from a terminal; it can reach your home folder and the network) |
+| AppImage | `chmod +x MCsQuick-*.AppImage && ./MCsQuick-*.AppImage` (from a terminal) |
+| Arch (AUR) | `git clone https://github.com/MichaelCodeToLimit/MCsQuick && cd MCsQuick/packaging/arch && makepkg -si` (not on the AUR yet) |
+| Nix | `nix run github:MichaelCodeToLimit/MCsQuick?dir=packaging/nix` (untested) |
 
-(From the .zip: `unzip mc-setup-linux.zip && cd mc-setup-linux && chmod +x *.sh && ./mc-setup.sh`.)
-Works over SSH and on servers without a desktop. It finds your package manager (apt, dnf, pacman, zypper, apk) to install Java, curl, jq and tmux,
-and uses `sudo` only when it needs it. Without sudo it still works, it just tells you what to ask an administrator for (firewall port, missing packages).
-Autostart uses a systemd **user** service (`systemctl --user status minecraft`) with "linger" so it starts at boot; a system service is used only if no user session exists.
-Links open with `xdg-open` when there is a desktop, otherwise they are printed for you to open on another computer. Change a server later with `./mc-customize.sh`.
+The installed packages give you the `mcsquick` command, and `mcsquick customize` changes a server later. With the tar.gz use `./mc-customize.sh`.
+The tool is a text wizard, so Flatpak and AppImage must be started from a terminal. It works over SSH and on servers without a desktop. It finds your package manager (apt, dnf, pacman, zypper, apk) to install Java, curl, jq and tmux,
+and uses `sudo` only when it needs it. Autostart uses a systemd **user** service (`systemctl --user status minecraft`) with "linger" so it starts at boot.
+
+**Mac with Homebrew:** a formula is in `packaging/homebrew`, but there is no tap yet, so use the zip below for now.
 
 **Mac (Intel or Apple Silicon):** unzip `mc-setup-mac.zip`, then double-click **`mc-setup.command`**.
 The first time macOS may say it "cannot be opened": right-click the file, choose **Open**, then **Open** again.

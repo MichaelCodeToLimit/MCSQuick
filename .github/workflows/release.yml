@@ -6,15 +6,17 @@ on:
     inputs:
       tag:
         description: Release tag to create
-        default: v0.1.0
+        default: v0.2.0
 permissions:
   contents: write
+env:
+  TAG: ${{ github.event.inputs.tag || github.ref_name }}
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build archives
+      - name: Archives (Windows, Mac, Linux)
         run: |
           mkdir -p out w m l/mc-setup-linux
           cp mc-setup.bat mc-setup.ps1 mc-customize.bat mc-customize.ps1 README.md w/
@@ -23,11 +25,42 @@ jobs:
           chmod +x m/*.command m/*.sh l/mc-setup-linux/*.sh
           (cd w && zip -q ../out/mc-setup-windows.zip *)
           (cd m && zip -q ../out/mc-setup-mac.zip *)
-          (cd l && tar czf ../out/mc-setup-linux.tar.gz mc-setup-linux && zip -qr ../out/mc-setup-linux.zip mc-setup-linux)
+          (cd l && tar czf ../out/mc-setup-linux.tar.gz mc-setup-linux && zip -qr ../out/mc-setup-linux.zip mc-setup-linux && tar cf ../out/mc-setup-linux.tar mc-setup-linux)
+      - name: .deb
+        run: V="${TAG#v}"; bash packaging/build-deb.sh "$V" out
+      - name: .rpm (fpm)
+        run: |
+          V="${TAG#v}"
+          sudo apt-get update -q && sudo apt-get install -y -q ruby rpm
+          sudo gem install --no-document fpm
+          rm -rf rpmroot && bash packaging/stage.sh rpmroot
+          fpm -s dir -t rpm -n mcsquick -v "$V" --architecture noarch --license MIT \
+            --url https://github.com/MichaelCodeToLimit/MCsQuick --description "Interactive Minecraft Java server setup" \
+            -d bash -d curl -d jq -d tar --rpm-os linux -p "out/mcsquick-$V-1.noarch.rpm" -C rpmroot usr
+      - name: AppImage
+        run: |
+          sudo apt-get install -y -q libfuse2 || true
+          rm -rf AppDir && bash packaging/stage.sh AppDir
+          cp packaging/mcsquick.svg AppDir/mcsquick.svg
+          cp packaging/mcsquick.desktop AppDir/mcsquick.desktop
+          sed -i 's#^D=/usr/share/mcsquick#D="${APPDIR:-}/usr/share/mcsquick"#' AppDir/usr/bin/mcsquick
+          printf '#!/bin/sh\nHERE="$(dirname "$(readlink -f "$0")")"\nexport APPDIR="$HERE"\nexec "$HERE/usr/bin/mcsquick" "$@"\n' > AppDir/AppRun
+          chmod +x AppDir/AppRun
+          curl -fsSL -o appimagetool https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool
+          ARCH=x86_64 ./appimagetool --appimage-extract-and-run AppDir "out/MCsQuick-${TAG#v}-x86_64.AppImage"
+      - name: Flatpak bundle (best effort)
+        continue-on-error: true
+        run: |
+          sudo apt-get install -y -q flatpak flatpak-builder
+          flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          flatpak-builder --user --force-clean --install-deps-from=flathub --repo=fprepo fpbuild packaging/flatpak/io.github.MichaelCodeToLimit.MCsQuick.yml
+          flatpak build-bundle fprepo out/MCsQuick.flatpak io.github.MichaelCodeToLimit.MCsQuick
+      - name: Checksums
+        run: cd out && sha256sum * > SHA256SUMS.txt
       - name: Publish
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          T="${{ github.event.inputs.tag || github.ref_name }}"
-          gh release create "$T" --target main out/* --title "$T" \
-            --notes "New tool, not tested on every system. Mac, Linux and some translations were only checked in simulation. Please report problems as issues."
+          gh release create "$TAG" --target main out/* --title "$TAG" \
+            --notes "New tool, not tested on every system. Mac and Linux packages (deb, rpm, AppImage, Flatpak) are built automatically and have not been tried on real machines yet. Please report problems as issues."

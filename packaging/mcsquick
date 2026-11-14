@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# mcsquick: set up a Minecraft server (mcsquick customize: change an existing one)
+D=/usr/share/mcsquick
+[[ -d "$D" ]] || D="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)/share/mcsquick"
+case "${1:-}" in
+  customize|customise|--customize|--customise) shift; exec bash "$D/mc-customize.sh" "$@" ;;
+  -h|--help) echo "Usage: mcsquick            set up a new Minecraft server"; echo "       mcsquick customize  change an existing server"; exit 0 ;;
+  *) exec bash "$D/mc-setup.sh" "$@" ;;
+esac

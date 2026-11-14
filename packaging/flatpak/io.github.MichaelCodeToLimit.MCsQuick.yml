@@ -1,0 +1,29 @@
+app-id: io.github.MichaelCodeToLimit.MCsQuick
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+command: mcsquick
+finish-args:
+  - --share=network
+  - --filesystem=home          # the wizard creates your server folder wherever you choose
+  - --share=ipc
+modules:
+  - name: jq
+    config-opts: [--disable-docs, --disable-maintainer-mode, --with-oniguruma=builtin]
+    sources:
+      - type: archive
+        url: https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-1.7.1.tar.gz
+        sha256: 478c9ca129fd2e3443fe27314b455e211e0d8c60bc8ff7df703873deeee580c2
+  - name: mcsquick
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 packaging/mcsquick /app/bin/mcsquick
+      - install -Dm755 mc-setup.sh mc-customize.sh -t /app/share/mcsquick
+      - install -Dm644 README.md LICENSE -t /app/share/mcsquick
+      - install -Dm644 packaging/mcsquick.desktop /app/share/applications/io.github.MichaelCodeToLimit.MCsQuick.desktop
+      - install -Dm644 packaging/mcsquick.svg /app/share/icons/hicolor/scalable/apps/io.github.MichaelCodeToLimit.MCsQuick.svg
+      - sed -i 's/^Icon=.*/Icon=io.github.MichaelCodeToLimit.MCsQuick/' /app/share/applications/io.github.MichaelCodeToLimit.MCsQuick.desktop
+      - sed -i 's#^D=/usr/share/mcsquick#D=/app/share/mcsquick#' /app/bin/mcsquick
+    sources:
+      - type: dir
+        path: ../..

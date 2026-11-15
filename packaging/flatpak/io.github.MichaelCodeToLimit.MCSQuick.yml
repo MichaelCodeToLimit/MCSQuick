@@ -1,4 +1,4 @@
-app-id: io.github.MichaelCodeToLimit.MCsQuick
+app-id: io.github.MichaelCodeToLimit.MCSQuick
 runtime: org.freedesktop.Platform
 runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
@@ -20,9 +20,9 @@ modules:
       - install -Dm755 packaging/mcsquick /app/bin/mcsquick
       - install -Dm755 mc-setup.sh mc-customize.sh -t /app/share/mcsquick
       - install -Dm644 README.md LICENSE -t /app/share/mcsquick
-      - install -Dm644 packaging/mcsquick.desktop /app/share/applications/io.github.MichaelCodeToLimit.MCsQuick.desktop
-      - install -Dm644 packaging/mcsquick.svg /app/share/icons/hicolor/scalable/apps/io.github.MichaelCodeToLimit.MCsQuick.svg
-      - sed -i 's/^Icon=.*/Icon=io.github.MichaelCodeToLimit.MCsQuick/' /app/share/applications/io.github.MichaelCodeToLimit.MCsQuick.desktop
+      - install -Dm644 packaging/mcsquick.desktop /app/share/applications/io.github.MichaelCodeToLimit.MCSQuick.desktop
+      - install -Dm644 packaging/mcsquick.svg /app/share/icons/hicolor/scalable/apps/io.github.MichaelCodeToLimit.MCSQuick.svg
+      - sed -i 's/^Icon=.*/Icon=io.github.MichaelCodeToLimit.MCSQuick/' /app/share/applications/io.github.MichaelCodeToLimit.MCSQuick.desktop
       - sed -i 's#^D=/usr/share/mcsquick#D=/app/share/mcsquick#' /app/bin/mcsquick
     sources:
       - type: dir

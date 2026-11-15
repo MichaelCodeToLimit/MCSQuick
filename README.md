@@ -23,12 +23,12 @@ Downloads are on the **Releases** page: `mc-setup-windows.zip`, `mc-setup-mac.zi
 | Format | Install |
 |---|---|
 | tar.gz (any distro, also .tar and .zip) | `tar xzf mc-setup-linux.tar.gz && cd mc-setup-linux && ./mc-setup.sh` |
-| .deb (Debian, Ubuntu) | `sudo apt install ./mcsquick_0.2.0_all.deb && mcsquick` |
-| .rpm (Fedora, openSUSE) | `sudo dnf install ./mcsquick-0.2.0-1.noarch.rpm && mcsquick` (openSUSE: `zypper install`) |
-| Flatpak | `flatpak install --user MCsQuick.flatpak && flatpak run io.github.MichaelCodeToLimit.MCsQuick` (run it from a terminal; it can reach your home folder and the network) |
-| AppImage | `chmod +x MCsQuick-*.AppImage && ./MCsQuick-*.AppImage` (from a terminal) |
-| Arch (AUR) | `git clone https://github.com/MichaelCodeToLimit/MCsQuick && cd MCsQuick/packaging/arch && makepkg -si` (not on the AUR yet) |
-| Nix | `nix run github:MichaelCodeToLimit/MCsQuick?dir=packaging/nix` (untested) |
+| .deb (Debian, Ubuntu) | `sudo apt install ./mcsquick_0.2.1_all.deb && mcsquick` |
+| .rpm (Fedora, openSUSE) | `sudo dnf install ./mcsquick-0.2.1-1.noarch.rpm && mcsquick` (openSUSE: `zypper install`) |
+| Flatpak | `flatpak install --user MCSQuick.flatpak && flatpak run io.github.MichaelCodeToLimit.MCSQuick` (run it from a terminal; it can reach your home folder and the network) |
+| AppImage | `chmod +x MCSQuick-*.AppImage && ./MCSQuick-*.AppImage` (from a terminal) |
+| Arch (AUR) | `git clone https://github.com/MichaelCodeToLimit/MCSQuick && cd MCSQuick/packaging/arch && makepkg -si` (not on the AUR yet) |
+| Nix | `nix run github:MichaelCodeToLimit/MCSQuick?dir=packaging/nix` (untested) |
 
 The installed packages give you the `mcsquick` command, and `mcsquick customize` changes a server later. With the tar.gz use `./mc-customize.sh`.
 The tool is a text wizard, so Flatpak and AppImage must be started from a terminal. It works over SSH and on servers without a desktop. It finds your package manager (apt, dnf, pacman, zypper, apk) to install Java, curl, jq and tmux,

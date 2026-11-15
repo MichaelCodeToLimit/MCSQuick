@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Name=MCsQuick
+Name=MCSQuick
 Comment=Set up your own Minecraft server
 Exec=mcsquick
 Icon=mcsquick

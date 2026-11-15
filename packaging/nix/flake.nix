@@ -1,5 +1,5 @@
 {
-  description = "MCsQuick: interactive Minecraft server setup";
+  description = "MCSQuick: interactive Minecraft server setup";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   outputs = { self, nixpkgs }:
     let
@@ -7,7 +7,7 @@
     in {
       packages = forAll (pkgs: {
         default = pkgs.stdenv.mkDerivation {
-          pname = "mcsquick"; version = "0.2.0";
+          pname = "mcsquick"; version = "0.2.1";
           src = ../..;
           nativeBuildInputs = [ pkgs.makeWrapper ];
           installPhase = ''

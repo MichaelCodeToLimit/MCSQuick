@@ -1,17 +1,17 @@
 # Maintainer: MichaelCodeToLimit
 pkgname=mcsquick
-pkgver=0.2.0
+pkgver=0.2.1
 pkgrel=1
 pkgdesc="Interactive Minecraft Java server setup (Vanilla, Paper, Geyser, playit.gg)"
 arch=('any')
-url="https://github.com/MichaelCodeToLimit/MCsQuick"
+url="https://github.com/MichaelCodeToLimit/MCSQuick"
 license=('MIT')
 depends=('bash' 'curl' 'jq' 'tar')
 optdepends=('tmux: keep the server running in the background' 'jre-openjdk-headless: Java (the tool can download its own)' 'miniupnpc: automatic router port opening')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/MichaelCodeToLimit/MCsQuick/archive/refs/tags/v$pkgver.tar.gz")
+source=("$pkgname-$pkgver.tar.gz::https://github.com/MichaelCodeToLimit/MCSQuick/archive/refs/tags/v$pkgver.tar.gz")
 sha256sums=('SKIP')   # replace with the real checksum: run `updpkgsums`
 package() {
-  cd "MCsQuick-$pkgver"
+  cd "MCSQuick-$pkgver"
   bash packaging/stage.sh "$pkgdir"
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }

@@ -14,7 +14,7 @@ Depends: bash (>= 4.3), curl, jq, tar, ca-certificates
 Recommends: tmux, unzip
 Suggests: default-jre-headless | openjdk-21-jre-headless, miniupnpc
 Maintainer: MichaelCodeToLimit <noreply@users.noreply.github.com>
-Homepage: https://github.com/MichaelCodeToLimit/MCsQuick
+Homepage: https://github.com/MichaelCodeToLimit/MCSQuick
 Description: Interactive Minecraft Java server setup
  Asks a few questions, downloads Java and the server, and creates
  start scripts. Supports Vanilla, Paper, Velocity, Geyser/Floodgate,

@@ -6,7 +6,7 @@ on:
     inputs:
       tag:
         description: Release tag to create
-        default: v0.2.0
+        default: v0.2.1
 permissions:
   contents: write
 env:
@@ -35,7 +35,7 @@ jobs:
           sudo gem install --no-document fpm
           rm -rf rpmroot && bash packaging/stage.sh rpmroot
           fpm -s dir -t rpm -n mcsquick -v "$V" --architecture noarch --license MIT \
-            --url https://github.com/MichaelCodeToLimit/MCsQuick --description "Interactive Minecraft Java server setup" \
+            --url https://github.com/MichaelCodeToLimit/MCSQuick --description "Interactive Minecraft Java server setup" \
             -d bash -d curl -d jq -d tar --rpm-os linux -p "out/mcsquick-$V-1.noarch.rpm" -C rpmroot usr
       - name: AppImage
         run: |
@@ -48,14 +48,14 @@ jobs:
           chmod +x AppDir/AppRun
           curl -fsSL -o appimagetool https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool
-          ARCH=x86_64 ./appimagetool --appimage-extract-and-run AppDir "out/MCsQuick-${TAG#v}-x86_64.AppImage"
+          ARCH=x86_64 ./appimagetool --appimage-extract-and-run AppDir "out/MCSQuick-${TAG#v}-x86_64.AppImage"
       - name: Flatpak bundle (best effort)
         continue-on-error: true
         run: |
           sudo apt-get install -y -q flatpak flatpak-builder
           flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-          flatpak-builder --user --force-clean --install-deps-from=flathub --repo=fprepo fpbuild packaging/flatpak/io.github.MichaelCodeToLimit.MCsQuick.yml
-          flatpak build-bundle fprepo out/MCsQuick.flatpak io.github.MichaelCodeToLimit.MCsQuick
+          flatpak-builder --user --force-clean --install-deps-from=flathub --repo=fprepo fpbuild packaging/flatpak/io.github.MichaelCodeToLimit.MCSQuick.yml
+          flatpak build-bundle fprepo out/MCSQuick.flatpak io.github.MichaelCodeToLimit.MCSQuick
       - name: Checksums
         run: cd out && sha256sum * > SHA256SUMS.txt
       - name: Publish

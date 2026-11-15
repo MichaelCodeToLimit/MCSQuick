@@ -45,7 +45,7 @@ footer{border-top:3px solid var(--line);margin-top:48px;padding:24px 0;color:var
 <body>
 <header class="top"><div class="w"><nav>
   <b>▦ MC SERVER SETUP</b>
-  <span><a href="#download">Download</a><a href="#how">How it works</a><a href="#faq">FAQ</a><a href="https://github.com/MichaelCodeToLimit/MCsQuick">GitHub</a>
+  <span><a href="#download">Download</a><a href="#how">How it works</a><a href="#faq">FAQ</a><a href="https://github.com/MichaelCodeToLimit/MCSQuick">GitHub</a>
   <button class="t" id="theme" type="button" aria-label="Switch light or dark theme">Theme</button></span>
 </nav></div></header>
 
@@ -53,7 +53,7 @@ footer{border-top:3px solid var(--line);margin-top:48px;padding:24px 0;color:var
 <section class="hero">
   <h1>Your own Minecraft server, in a few questions.</h1>
   <p class="lead">A free, open-source setup tool for Minecraft Java servers. It asks simple questions, downloads Java and the server for you, and gives you start scripts and an address friends can join. Windows, Mac and Linux, in 14 languages.</p>
-  <p><a class="btn" id="mainbtn" href="#download">Download</a><a class="btn alt" href="https://github.com/MichaelCodeToLimit/MCsQuick">View on GitHub</a></p>
+  <p><a class="btn" id="mainbtn" href="#download">Download</a><a class="btn alt" href="https://github.com/MichaelCodeToLimit/MCSQuick">View on GitHub</a></p>
   <div class="note"><b>Heads up:</b> this tool is new. It has not been tested on every system, and some parts (for example Geyser downloads, the Mac and Linux versions, and some translations) have only been checked in simulation. If something breaks, please open an issue on GitHub.</div>
 </section>
 
@@ -73,7 +73,7 @@ footer{border-top:3px solid var(--line);margin-top:48px;padding:24px 0;color:var
 
 <section id="download">
   <h2>Download</h2>
-  <p>Pick your system and install method. We highlighted the one for your system. Files come from the <a href="https://github.com/MichaelCodeToLimit/MCsQuick/releases/latest">latest release</a>.</p>
+  <p>Pick your system and install method. We highlighted the one for your system. Files come from the <a href="https://github.com/MichaelCodeToLimit/MCSQuick/releases/latest">latest release</a>.</p>
   <div role="tablist" aria-label="System" id="oses"></div>
   <div role="tablist" aria-label="Install method" id="meths"></div>
   <div class="card" id="panel" role="tabpanel" aria-live="polite"></div>
@@ -103,11 +103,11 @@ footer{border-top:3px solid var(--line);margin-top:48px;padding:24px 0;color:var
 </section>
 </main>
 
-<footer><div class="w">Open source under the MIT license. <a href="https://github.com/MichaelCodeToLimit/MCsQuick">Source and issues on GitHub</a>. Not affiliated with Mojang or Microsoft. Minecraft is a trademark of Mojang Studios.</div></footer>
+<footer><div class="w">Open source under the MIT license. <a href="https://github.com/MichaelCodeToLimit/MCSQuick">Source and issues on GitHub</a>. Not affiliated with Mojang or Microsoft. Minecraft is a trademark of Mojang Studios.</div></footer>
 
 <script>
 (function(){
-  var R="https://github.com/MichaelCodeToLimit/MCsQuick/releases/latest/download/";
+  var R="https://github.com/MichaelCodeToLimit/MCSQuick/releases/latest/download/";
   var D={
     windows:{label:"Windows",m:[{k:"zip",l:"Zip",f:"mc-setup-windows.zip",t:"Unzip it, then double-click <code>mc-setup.bat</code>. Keep <code>mc-setup.ps1</code> next to it. Windows may say it is unrecognised: choose More info, then Run anyway."}]},
     mac:{label:"Mac",m:[
@@ -115,11 +115,11 @@ footer{border-top:3px solid var(--line);margin-top:48px;padding:24px 0;color:var
       {k:"zip",l:"Zip",f:"mc-setup-mac.zip",t:"Unzip, then double-click <code>mc-setup.command</code>. First time: right-click, Open."}]},
     linux:{label:"Linux",m:[
       {k:"tar",l:".tar.gz",f:"mc-setup-linux.tar.gz",c:"tar xzf mc-setup-linux.tar.gz && cd mc-setup-linux && ./mc-setup.sh",t:"Works on any distro, also over SSH. A plain .tar and a .zip are on the release page too."},
-      {k:"deb",l:".deb (Debian, Ubuntu)",f:"mcsquick_0.2.0_all.deb",c:"sudo apt install ./mcsquick_0.2.0_all.deb && mcsquick",t:"Installs the <code>mcsquick</code> command. Run <code>mcsquick customize</code> to change a server later."},
-      {k:"rpm",l:".rpm (Fedora, openSUSE)",f:"mcsquick-0.2.0-1.noarch.rpm",c:"sudo dnf install ./mcsquick-0.2.0-1.noarch.rpm && mcsquick",t:"On openSUSE use <code>sudo zypper install ./mcsquick-0.2.0-1.noarch.rpm</code>."},
-      {k:"flatpak",l:"Flatpak",f:"MCsQuick.flatpak",c:"flatpak install --user MCsQuick.flatpak && flatpak run io.github.MichaelCodeToLimit.MCsQuick",t:"Run it from a terminal: the wizard is text based. The app can reach your home folder and the network. Not on Flathub."},
-      {k:"appimage",l:"AppImage",f:"MCsQuick-0.2.0-x86_64.AppImage",c:"chmod +x MCsQuick-0.2.0-x86_64.AppImage && ./MCsQuick-0.2.0-x86_64.AppImage",t:"Run it from a terminal. No install needed."},
-      {k:"aur",l:"Arch (AUR)",c:"git clone https://github.com/MichaelCodeToLimit/MCsQuick && cd MCsQuick/packaging/arch && makepkg -si",t:"Not on the AUR yet. This builds the package from the PKGBUILD in the repo."}]}
+      {k:"deb",l:".deb (Debian, Ubuntu)",f:"mcsquick_0.2.1_all.deb",c:"sudo apt install ./mcsquick_0.2.1_all.deb && mcsquick",t:"Installs the <code>mcsquick</code> command. Run <code>mcsquick customize</code> to change a server later."},
+      {k:"rpm",l:".rpm (Fedora, openSUSE)",f:"mcsquick-0.2.1-1.noarch.rpm",c:"sudo dnf install ./mcsquick-0.2.1-1.noarch.rpm && mcsquick",t:"On openSUSE use <code>sudo zypper install ./mcsquick-0.2.1-1.noarch.rpm</code>."},
+      {k:"flatpak",l:"Flatpak",f:"MCSQuick.flatpak",c:"flatpak install --user MCSQuick.flatpak && flatpak run io.github.MichaelCodeToLimit.MCSQuick",t:"Run it from a terminal: the wizard is text based. The app can reach your home folder and the network. Not on Flathub."},
+      {k:"appimage",l:"AppImage",f:"MCSQuick-0.2.1-x86_64.AppImage",c:"chmod +x MCSQuick-0.2.1-x86_64.AppImage && ./MCSQuick-0.2.1-x86_64.AppImage",t:"Run it from a terminal. No install needed."},
+      {k:"aur",l:"Arch (AUR)",c:"git clone https://github.com/MichaelCodeToLimit/MCSQuick && cd MCSQuick/packaging/arch && makepkg -si",t:"Not on the AUR yet. This builds the package from the PKGBUILD in the repo."}]}
   };
   var ua=(navigator.userAgent||"")+" "+(navigator.platform||"");
   var mine=/Android|iPhone|iPad/i.test(ua)?"":/Win/i.test(ua)?"windows":/Mac/i.test(ua)?"mac":/Linux|X11|CrOS/i.test(ua)?"linux":"";

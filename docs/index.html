@@ -77,7 +77,7 @@ footer{border-top:3px solid var(--line);margin-top:48px;padding:24px 0;color:var
   <div role="tablist" aria-label="System" id="oses"></div>
   <div role="tablist" aria-label="Install method" id="meths"></div>
   <div class="card" id="panel" role="tabpanel" aria-live="polite"></div>
-  <div class="note"><b>Untested packages:</b> the zips and tar.gz were tried in simulation only. The .deb, .rpm, AppImage, Flatpak, AUR, Homebrew and Nix packages are new and have <b>not</b> been tried on real systems yet. The AUR, Homebrew and Nix files are in the repo's <code>packaging</code> folder and are not published to those stores.</div>
+  <div class="note"><b>Untested packages:</b> the zips and tar.gz were tried in simulation only. The .deb, .rpm, AppImage, Flatpak, AUR, Homebrew and Nix packages are new and have <b>not</b> been tried on real systems yet. The AUR and Nix files are in the repo's <code>packaging</code> folder and are not published to those stores.</div>
 </section>
 
 <section id="how">
@@ -111,7 +111,7 @@ footer{border-top:3px solid var(--line);margin-top:48px;padding:24px 0;color:var
   var D={
     windows:{label:"Windows",m:[{k:"zip",l:"Zip",f:"mc-setup-windows.zip",t:"Unzip it, then double-click <code>mc-setup.bat</code>. Keep <code>mc-setup.ps1</code> next to it. Windows may say it is unrecognised: choose More info, then Run anyway."}]},
     mac:{label:"Mac",m:[
-      {k:"brew",l:"Homebrew",t:"Not published to a tap yet. Until then use the zip. (The formula is in the repo's <code>packaging/homebrew</code> folder.)"},
+      {k:"brew",l:"Homebrew",c:"brew tap MichaelCodeToLimit/mcsquick https://github.com/MichaelCodeToLimit/MCSQuick && brew install mcsquick && mcsquick",t:"This repo is its own Homebrew tap. Run <code>mcsquick customize</code> to change a server later."},
       {k:"zip",l:"Zip",f:"mc-setup-mac.zip",t:"Unzip, then double-click <code>mc-setup.command</code>. First time: right-click, Open."}]},
     linux:{label:"Linux",m:[
       {k:"tar",l:".tar.gz",f:"mc-setup-linux.tar.gz",c:"tar xzf mc-setup-linux.tar.gz && cd mc-setup-linux && ./mc-setup.sh",t:"Works on any distro, also over SSH. A plain .tar and a .zip are on the release page too."},

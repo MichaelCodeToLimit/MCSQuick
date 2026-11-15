@@ -34,7 +34,15 @@ The installed packages give you the `mcsquick` command, and `mcsquick customize`
 The tool is a text wizard, so Flatpak and AppImage must be started from a terminal. It works over SSH and on servers without a desktop. It finds your package manager (apt, dnf, pacman, zypper, apk) to install Java, curl, jq and tmux,
 and uses `sudo` only when it needs it. Autostart uses a systemd **user** service (`systemctl --user status minecraft`) with "linger" so it starts at boot.
 
-**Mac with Homebrew:** a formula is in `packaging/homebrew`, but there is no tap yet, so use the zip below for now.
+**Mac with Homebrew** (this repo is its own tap, nothing else to set up):
+
+```
+brew tap MichaelCodeToLimit/mcsquick https://github.com/MichaelCodeToLimit/MCSQuick
+brew install mcsquick
+mcsquick
+```
+
+`mcsquick customize` changes a server later. New and untested on a real Mac. Prefer the zip below if brew gives trouble.
 
 **Mac (Intel or Apple Silicon):** unzip `mc-setup-mac.zip`, then double-click **`mc-setup.command`**.
 The first time macOS may say it "cannot be opened": right-click the file, choose **Open**, then **Open** again.
